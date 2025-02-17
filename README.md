@@ -130,15 +130,15 @@ php producer.php
 PHP's IPC System Message Queue function `msg_send` has auto serialization, This is very useful.
 
 
-Compare SysV IPC Queue to another shared way. IPC Queue has easy to use.
+Compare SysV IPC Queue to another shared way. IPC Queue is easy to use.
 
 
-| type | advantage to SysV mesg func  | dis-advantage to sysV func |
-|:---|:---|:---|
-| tcp:// | can listen another pc | manual serialization, data structure, read size needs manually adjustment  |
-| Shared-Memory and  Semaphore  | can share data  |  be careful of R/W timming |
-| file and flock() | data persistence is easy | Be careful of R/W timming(flock), Data structure fully considered, manual seriazation |
-| sqlite / sql | Easy to data persistence | Needs SQL knowledge or O/R mapper, manuall serialization |
+| type                         | advantage to SysV mesg func | dis-advantage to sysV func                                                                                                    |
+|:-----------------------------|:----------------------------|:------------------------------------------------------------------------------------------------------------------------------|
+| tcp://                       | can listen another pc       | Manual serialization, data structure design, read size needs manually adjustment                                              |
+| Shared-Memory and  Semaphore | can share same data         | Be careful of R/W timming (Semaphore), manually blocking, Queue Data structure needs fully considered, manually serialization |
+| File and flock()             | data persistence is easy    | Be careful of R/W timming(flock), Data structure fully considered, manually serialization                                     |
+| sqlite / sql                 | Easy to data persistence    | Needs SQL knowledge or O/R mapper, manually serialization                                                                     |
 
 
 PHP's `SplQueue` or `SplStack` cannot share data to another process, These require sql or file library to use. 
