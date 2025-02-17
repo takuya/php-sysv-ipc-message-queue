@@ -10,9 +10,17 @@ This repository wrap function and frequently appearing Usage.
 ## Installing 
 
 from Packagist.
-
+```shell
+composer require takuya/php-sysv-ipc-message-queue
+```
 from GitHub.
-
+```shell
+name='php-sysv-ipc-message-queue'
+composer config repositories.$name \
+vcs https://github.com/takuya/$name  
+composer require takuya/$name:master
+composer install
+```
 
 ## Examples.
 
