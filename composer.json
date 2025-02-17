@@ -1,0 +1,35 @@
+{
+  "name": "takuya/php-sysv-ipc-message-queue",
+  "type": "library",
+  "version": "0.1",
+  "license": "GPL-3.0-or-later",
+  "autoload": {
+    "psr-4": {
+      "Takuya\\PhpSysvMessageQueue\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Tests\\PhpSysVMessageQueue\\": "tests/"
+    },
+    "files": [
+      "tests/helpers/str_rand.php",
+      "tests/helpers/get_process_info.php"
+    ]
+  },
+  "authors": [
+    {
+      "name": "takuya",
+      "email": "55338+takuya@users.noreply.github.com"
+    }
+  ],
+  "require-dev": {
+    "larapack/dd": "^1.1",
+    "phpunit/phpunit": "^9.6",
+    "ext-pcntl": "*",
+    "ext-posix": "*"
+  },
+  "require": {
+    "ext-sysvmsg": "*"
+  }
+}
