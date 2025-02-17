@@ -25,6 +25,7 @@ composer install
 ## Examples.
 
 - Initialize and push 
+- Dont forget remove Queue.
 - Save and Load for system ShutDown.
 - Multi process (inter process).
 
@@ -72,6 +73,29 @@ $result = $q->pop();
 $result = $q->pop(null,strlen(serialize($msg)));// will be 10 byte larger.
 ```
 I wrote this class , suppose to be used simple message. large size (>1024) is un-usual way.
+
+## Don't forget to remove queue never used.
+
+use `destroy()` to remove queue.
+```php
+require_once 'vendor/autoload.php';
+use Takuya\PhpSysvMessageQueue\IPCMsgQueue;
+$q = new IPCMsgQueue('my-named-queue');
+$q->push('message');
+$q->pop();
+$q->destroy();
+```
+
+Or use `ipcs -q`, `ipcrm`  command to remove unnecessary used queue.
+
+```shell
+ipcs -q | grep takuya
+ipcrm --queue-key 0x1234567
+## you can delete at once.
+ipcs -q | grep takuya | grep -oE '0x[a-f0-9]+' | xargs -I@ ipcrm --queue-key @
+```
+
+Queue will be remains unless explicitly deleted.
 
 ## save and load when OS shutdown.
 

@@ -29,3 +29,22 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: update tested date.
+  run-composer-install:
+    runs-on: ubuntu-latest
+    steps:
+      - name:  installation
+        shell: bash
+        run: |
+          php -v
+          composer require takuya/php-sysv-ipc-message-queue
+          cat <<'EOS' > sample.php
+          <?php
+          require_once 'vendor/autoload.php';
+          use Takuya\PhpSysvMessageQueue\IPCMsgQueue;
+          $q = new IPCMsgQueue('my-named-queue');
+          $q->push('message');
+          $q->pop();
+          $q->destroy();
+          EOS
+          cat sample.php
+          php sample.php
