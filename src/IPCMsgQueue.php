@@ -80,17 +80,24 @@ class IPCMsgQueue {
     foreach ($arr as $e) {
       $this->push($e);
     }
+    return sizeof($arr);
   }
   
   public function save( string $file, $priority = 100, $max_bytes = 1024 ):bool {
-    return file_put_contents($file, $this->dumpQueue($priority, $max_bytes));
+    if($dump = $this->dumpQueue($priority, $max_bytes) ){
+      return file_put_contents($file, $dump);
+    }
+    return false;
   }
   
   public function load( string $file ) {
+    if (!file_exists($file)){
+      return false;
+    }
     if( filesize($file) < 3 ) {
       throw new \InvalidArgumentException('file is empty');
     }
-    $this->loadQueue(file_get_contents($file));
+    return $this->loadQueue(file_get_contents($file));
   }
   
   public function destroy():bool {
