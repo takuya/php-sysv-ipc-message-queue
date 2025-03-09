@@ -8,16 +8,12 @@ class IPCMsgQueue {
   protected \SysvMessageQueue $_q;
   protected mixed             $lastValue;
   
-  protected function key() {
-    if( empty($this->ipc_key) ) {
-      $seed = crc32($this->name);
-      mt_srand($seed);
-      $random_unsigned_int32 = mt_rand(0, PHP_INT_MAX) & 0x7FFFFFFF;
-      mt_srand(time());
-      $this->ipc_key = $random_unsigned_int32;
-    }
-    
-    return $this->ipc_key;
+  protected function key():int {
+    return $this->ipc_key??=static::str_to_key($this->name);
+  }
+  
+  public static function str_to_key(string $str):int{
+    return crc32($str)&0x7FFFFFFF;
   }
   
   public function __construct( public string $name, ) {
